@@ -1,0 +1,36 @@
+Copyright (C) 2010 Joe Noon (joe[at]stat.im)
+
+mod_httpeval is a prosody module, similar in power to mod_console, but over http.
+
+It evaluates straight lua code inside the scope of prosody, so most anything that
+could be hard-coded directly into prosody can be run via mod_httpeval.
+
+Configuration:
+===
+
+modules_enabled = {
+  ... other stuff ...
+  "httpeval";
+}
+
+httpeval_ports = { 8190 };
+httpeval_interface = "127.0.0.1";
+httpeval_handshake = "some-secure-hash";
+  
+Usage:
+===
+
+POST to http://127.0.0.1:8190/http-eval/?handshake=YOUR_HANDSHAKE
+
+(the BODY of the POST should be valid lua code)
+
+The response will be prefixed with one of: 
+  "Error: ", "Result: ", "Message: ", "OK: "
+
+Your code can take that into account when examining responses.
+
+Caution:
+===
+
+As with console, use with caution.  This should probably be firewalled and
+have a secure handshake.  
